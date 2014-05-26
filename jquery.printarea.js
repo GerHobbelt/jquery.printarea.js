@@ -1,8 +1,8 @@
 /**
- *  Version 2.2.1 Copyright (C) 2013  Chris Ritschard
+ *  Version 2.2.2 Copyright (C) 2013
  *
- *  Tested ONLY in IE 9, FF 18.0.1 and Chrome 24.0.1312.57.
- *  No official support for other browsers, but will TRY to accommodate challenges in other browsers.
+ *  Tested in IE 10, FF 21.0 and Chrome 27.0.1453.110
+ *  No official support for other browsers, but will TRY to accomodate challenges in other browsers.
  *
  *  Example:
  *      Print Button: <div id="print_button">Print</div>
@@ -24,6 +24,7 @@
  *  @popTitle | [string]  | ('')                   | popup window title element
  *  @popClose | [boolean] | (false),true           | popup window close after printing
  *  @strict   | [boolean] | (undefined),true,false | strict or loose(Transitional) html 4.01 document standard or undefined to not include at all (only for popup option)
+ *  @extraCss | [string]  | ("")                   | comma separated list of extra css to include
  */
 (function($) {
     var counter = 0;
@@ -34,7 +35,8 @@
                      popX     : 200,
                      popY     : 200,
                      popTitle : '',
-                     popClose : false };
+                     popClose : false,
+                     extraCss : '' };
 
     var settings = {};//global settings
 
@@ -89,18 +91,18 @@
     {
         var head = "<head><title>" + settings.popTitle + "</title>";
         $(document).find("link")
+            .filter(function(){ return $(this).attr("rel").toLowerCase() == "stylesheet"; })
             .filter(function(){
-                    return $(this).attr("rel").toLowerCase() === "stylesheet";
-                })
-            .filter(function(){ // this filter contributed by "mindinquiring"
                     var media = $(this).attr("media");
-                    return (typeof media === "undefined" || media.toLowerCase() === "" || media.toLowerCase() === "print");
+                    return (media == undefined || media.toLowerCase() == "" || media.toLowerCase() == "print" || media.toLowerCase() == "all")
                 })
             .each(function(){
                     head += '<link type="text/css" rel="stylesheet" href="' + $(this).attr("href") + '" >';
                 });
-        head += "</head>";
-        return head;
+
+        if ( settings.extraCss ) settings.extraCss.replace( /([^,\s]+)/g, function(m){ head += '<link type="text/css" rel="stylesheet" href="' + m + '">' });
+
+        return head += "</head>";
     }
 
     function getBody( printElement )
