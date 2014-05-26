@@ -2,7 +2,7 @@
  *  Version 2.1
  *      -Contributors: "mindinquiring" : filter to exclude any stylesheet other than print.
  *  Tested ONLY in IE 8 and FF 3.6. No official support for other browsers, but will
- *      TRY to accomodate challenges in other browsers.
+ *      TRY to accommodate challenges in other browsers.
  *  Example:
  *      Print Button: <div id="print_button">Print</div>
  *      Print Area  : <div class="PrintArea"> ... html ... </div>
