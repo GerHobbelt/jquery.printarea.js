@@ -1,9 +1,7 @@
 /**
- *  Version 2.2.1 Copyright (C) 2013  Chris Ritschard
- *
+ *  Version 2.2.0 Copyright (C) 2013  Chris Ritschard
  *  Tested ONLY in IE 9, FF 18.0.1 and Chrome 24.0.1312.57.
- *  No official support for other browsers, but will TRY to accommodate challenges in other browsers.
- *
+ *  No official support for other browsers, but will TRY to accomodate challenges in other browsers.
  *  Example:
  *      Print Button: <div id="print_button">Print</div>
  *      Print Area  : <div class="PrintArea"> ... html ... </div>
@@ -89,18 +87,16 @@
     {
         var head = "<head><title>" + settings.popTitle + "</title>";
         $(document).find("link")
+            .filter(function(){ return $(this).attr("rel").toLowerCase() == "stylesheet"; })
             .filter(function(){
-                    return $(this).attr("rel").toLowerCase() === "stylesheet";
-                })
-            .filter(function(){ // this filter contributed by "mindinquiring"
                     var media = $(this).attr("media");
-                    return (typeof media === "undefined" || media.toLowerCase() === "" || media.toLowerCase() === "print");
+                    return (media == undefined || media.toLowerCase() == "" || media.toLowerCase() == "print")
                 })
             .each(function(){
                     head += '<link type="text/css" rel="stylesheet" href="' + $(this).attr("href") + '" >';
                 });
-        head += "</head>";
-        return head;
+
+        return head += "</head>";
     }
 
     function getBody( printElement )
