@@ -1,8 +1,9 @@
 /**
- *  Version 2.1
- *      -Contributors: "mindinquiring" : filter to exclude any stylesheet other than print.
- *  Tested ONLY in IE 8 and FF 3.6. No official support for other browsers, but will
- *      TRY to accommodate challenges in other browsers.
+ *  Version 2.1.2 Copyright (C) 2013  Chris Ritschard
+ *
+ *  Tested ONLY in IE 9 and FF 18.0.1. No official support for other browsers, but will
+ *  TRY to accommodate challenges in other browsers.
+ *
  *  Example:
  *      Print Button: <div id="print_button">Print</div>
  *      Print Area  : <div class="PrintArea"> ... html ... </div>
@@ -89,11 +90,11 @@
         var head = "<head><title>" + settings.popTitle + "</title>";
         $(document).find("link")
             .filter(function(){
-                    return $(this).attr("rel").toLowerCase() == "stylesheet";
+                    return $(this).attr("rel").toLowerCase() === "stylesheet";
                 })
             .filter(function(){ // this filter contributed by "mindinquiring"
                     var media = $(this).attr("media");
-                    return (typeof media == "undefined" || media.toLowerCase() == "" || media.toLowerCase() == "print");
+                    return (typeof media === "undefined" || media.toLowerCase() === "" || media.toLowerCase() === "print");
                 })
             .each(function(){
                     head += '<link type="text/css" rel="stylesheet" href="' + $(this).attr("href") + '" >';
